@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  repository:
+    build:
+      context: .
+      dockerfile: dockerfile.db
+    restart: always
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: "json-parser-db"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: password_2020
+    container_name: db
