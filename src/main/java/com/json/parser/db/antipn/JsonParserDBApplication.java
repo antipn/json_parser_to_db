@@ -12,10 +12,8 @@ public class JsonParserDBApplication {
 
     public static void main(String[] args) throws Exception {
         //ConfigurableApplicationContext context = SpringApplication.run(JsonParserDBApplication.class, args);
-        JsonReader jsonReader = new JsonReader("src//main//resources//input.json");
-        System.out.println(jsonReader.getLines());
 
-
+        JsonReader.getData("input.json");
     }
 
 }

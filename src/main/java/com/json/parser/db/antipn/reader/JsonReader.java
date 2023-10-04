@@ -1,33 +1,65 @@
 package com.json.parser.db.antipn.reader;
 
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class JsonReader {
 
-    public String filePath;
+    static public void getData(String fileName) throws Exception {
 
-    public JsonReader(String filePath) {
-        this.filePath = filePath;
-    }
+        InputStream inputData = null;
 
-    public List<String> getLines() {
-        Path pathFile = Paths.get(filePath);
-        boolean exists = Files.exists(pathFile);
-        if (exists) {
-            try {
-                return Files.readAllLines(pathFile);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                System.out.println("There is problem with file " + pathFile.getFileName());
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            URL file = JsonReader.class.getResource("/" + fileName);
+            if (file == null) throw new Exception("Файл не существует");
+            inputData = JsonReader.class.getClassLoader().getResourceAsStream(fileName);
+
+            inputData.mark(1);
+            int read = inputData.read(new byte[1]);
+            inputData.reset();
+            if (read == -1) {
+                throw new Exception("Нет данных в файле");
             }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("There is problem with file " + fileName);
+            throw new Exception("Ошибка");
         }
-        return null;
+
+
+        JsonNode rootNode = mapper.readTree(inputData);
+
+        JsonNode locatedNode = rootNode.path("criterias");
+
+        System.out.println("Выводим наш массив критериев поиска" + locatedNode.toString());
+
+        System.out.println("Выводим поля и значения по очереди");
+        //Iterator<Map.Entry<String, JsonNode>> fields = locatedNode.fields();
+
+        int i = 0;
+        for (JsonNode node : locatedNode) {
+            System.out.println("Обнаружен критерий поиска " + node.isContainerNode());
+
+            Iterator<Map.Entry<String, JsonNode>> nodeFields = node.fields();
+            while (nodeFields.hasNext()) {
+
+                Map.Entry<String, JsonNode> next = nodeFields.next();
+                System.out.println("Поле " + i + " кол-во элементов в поле " + node.size());
+                System.out.println("ключ: " + next.getKey() + " значение: " + next.getValue());
+
+            }
+            i++;
+        }
+        inputData.close();
     }
 
 }
