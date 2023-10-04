@@ -13,27 +13,27 @@ CREATE SEQUENCE global_seq_customers START WITH 1 INCREMENT BY 1;
 CREATE TABLE customers
 (
     id        SMALLINT PRIMARY KEY DEFAULT nextval('global_seq_customers'),
-    firstName VARCHAR(20),
-    lastName  VARCHAR(20)
+    first_name VARCHAR(20),
+    last_name  VARCHAR(20)
 );
 
 CREATE SEQUENCE global_seq_products START WITH 1 INCREMENT BY 1;
 CREATE TABLE products
 (
     id           INTEGER PRIMARY KEY DEFAULT nextval('global_seq_products'),
-    productName  VARCHAR(30) NOT NULL,
-    productPrice INTEGER     NOT NULL
+    product_name  VARCHAR(30) NOT NULL,
+    product_price INTEGER     NOT NULL
 );
 
 CREATE SEQUENCE global_seq_purchases START WITH 1 INCREMENT BY 1;
 CREATE TABLE purchases
 (
     id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq_purchases'),
-    idCustomer       INTEGER NOT NULL,
-    idProduct        INTEGER NOT NULL,
-    quantityPurchase INTEGER NOT NULL,
-    datePurchase     DATE    NOT NULL,
+    id_customer       INTEGER NOT NULL,
+    id_product        INTEGER NOT NULL,
+    quantity_purchase INTEGER NOT NULL,
+    date_purchase     DATE    NOT NULL,
 
-    FOREIGN KEY (idCustomer) REFERENCES customers (id) ON DELETE CASCADE,
-    FOREIGN KEY (idProduct) REFERENCES products (id) ON DELETE CASCADE
+    FOREIGN KEY (id_customer) REFERENCES customers (id) ON DELETE CASCADE,
+    FOREIGN KEY (id_product) REFERENCES products (id) ON DELETE CASCADE
 );

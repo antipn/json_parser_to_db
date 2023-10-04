@@ -1,5 +1,5 @@
 alter SEQUENCE global_seq_customers RESTART WITH 100;
-insert into public.customers (id, firstName, lastName)
+insert into public.customers (id, first_name, last_name)
 values (1, 'Антон', 'Иванов'),
        (2, 'Николай', 'Иванов'),
        (3, 'Иван', 'Петров'),
@@ -13,7 +13,7 @@ values (1, 'Антон', 'Иванов'),
 
 
 alter SEQUENCE global_seq_products RESTART WITH 100;
-insert into public.products (id, productName, productPrice)
+insert into public.products (id, product_name, product_price)
 values (1, 'Хлеб', 10),
        (2, 'Молоко', 20),
        (3, 'Минеральная вода', 30),
@@ -36,7 +36,7 @@ values (1, 'Хлеб', 10),
        (20, 'Груша', 200);
 
 alter SEQUENCE global_seq_purchases RESTART WITH 100;
-insert into public.purchases(id,idCustomer, idProduct, quantityPurchase,datePurchase)
+insert into public.purchases(id,id_customer, id_product, quantity_purchase,date_purchase)
 values (		1	,	1	,	1	,	1	,'10.01.2023'	),
        (		2	,	1	,	2	,	2	,'10.01.2023'	),
        (		3	,	2	,	3	,	3	,'10.01.2023'	),
