@@ -5,13 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 
 public class JsonReader {
 
-    static public void getData(String fileName) throws Exception {
+    static public List<HashMap<String, String>> getData(String fileName) throws Exception {
 
         InputStream inputData = null;
 
@@ -40,26 +39,36 @@ public class JsonReader {
 
         JsonNode locatedNode = rootNode.path("criterias");
 
-        System.out.println("Выводим наш массив критериев поиска" + locatedNode.toString());
-
-        System.out.println("Выводим поля и значения по очереди");
+        //System.out.println("Выводим наш массив критериев поиска" + locatedNode.toString());
+        //System.out.println("Выводим поля и значения по очереди");
         //Iterator<Map.Entry<String, JsonNode>> fields = locatedNode.fields();
 
+
         int i = 0;
+        List<HashMap<String, String>> data = new ArrayList<>();
+
         for (JsonNode node : locatedNode) {
-            System.out.println("Обнаружен критерий поиска " + node.isContainerNode());
+            //System.out.println("Обнаружен критерий поиска " + node.isContainerNode());
+            HashMap<String, String> nodeData = new HashMap<>();
 
             Iterator<Map.Entry<String, JsonNode>> nodeFields = node.fields();
+
+
             while (nodeFields.hasNext()) {
 
                 Map.Entry<String, JsonNode> next = nodeFields.next();
-                System.out.println("Поле " + i + " кол-во элементов в поле " + node.size());
-                System.out.println("ключ: " + next.getKey() + " значение: " + next.getValue());
-
+                //System.out.println("Поле " + i + " кол-во элементов в поле " + node.size());
+                System.out.println("ключ: " + next.getKey() + " значение: " + next.getValue().asText());
+                nodeData.put(next.getKey(),next.getValue().asText());
             }
+            data.add(nodeData);
             i++;
         }
         inputData.close();
+
+        return data;
     }
+
+
 
 }
