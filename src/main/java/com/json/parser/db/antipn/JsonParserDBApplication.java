@@ -2,6 +2,7 @@
 package com.json.parser.db.antipn;
 
 import com.json.parser.db.antipn.converter.JsonToObjects;
+import com.json.parser.db.antipn.models.searching.Search;
 import com.json.parser.db.antipn.reader.JsonReader;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,8 +20,12 @@ public class JsonParserDBApplication {
         //ConfigurableApplicationContext context = SpringApplication.run(JsonParserDBApplication.class, args);
 
         List<HashMap<String, String>> data = JsonReader.getData("input.json");
-        JsonToObjects.converter(data);
 
+
+        List<? super Search> converter = JsonToObjects.converter(data);
+
+
+        converter.forEach(System.out::println);
     }
 
 }

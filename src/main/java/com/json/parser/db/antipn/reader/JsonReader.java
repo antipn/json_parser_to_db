@@ -55,7 +55,6 @@ public class JsonReader {
 
 
             while (nodeFields.hasNext()) {
-
                 Map.Entry<String, JsonNode> next = nodeFields.next();
                 //System.out.println("Поле " + i + " кол-во элементов в поле " + node.size());
                 System.out.println("ключ: " + next.getKey() + " значение: " + next.getValue().asText());
