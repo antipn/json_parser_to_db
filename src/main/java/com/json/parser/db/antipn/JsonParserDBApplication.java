@@ -21,11 +21,8 @@ public class JsonParserDBApplication {
 
         List<HashMap<String, String>> data = JsonReader.getData("input.json");
 
-
         List<? super Search> converter = JsonToObjects.converter(data);
-
 
         converter.forEach(System.out::println);
     }
-
 }

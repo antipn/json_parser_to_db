@@ -1,6 +1,6 @@
 package com.json.parser.db.antipn.sqlObjects;
 
-public interface CustomersSQL {
+public interface CustomerSQL {
 
     Long getId();
 

@@ -1,8 +1,7 @@
-package com.json.parser.db.antipn.repositories;
+package com.json.parser.db.antipn.repositories.archive;
 
 import com.json.parser.db.antipn.models.Customer;
-import com.json.parser.db.antipn.models.searching.SearchByLastName;
-import com.json.parser.db.antipn.sqlObjects.CustomersSQL;
+import com.json.parser.db.antipn.sqlObjects.CustomerSQL;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,6 +21,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
                     "group by id_customer, c.first_name, c.last_name\n" +
                     "order by sum(quantity_purchase) ASC LIMIT : num\n "
             , nativeQuery = true)
-    public Optional<List<CustomersSQL>> findBadCustomers(Long num);
+    public Optional<List<CustomerSQL>> findBadCustomers(Long num);
 
 }
