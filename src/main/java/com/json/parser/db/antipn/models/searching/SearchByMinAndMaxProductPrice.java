@@ -1,6 +1,7 @@
 package com.json.parser.db.antipn.models.searching;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ SearchByMinAndMaxProductPrice implements Search {
         this.maxExpenses = maxExpenses;
     }
 
+    @JsonIgnore
     SearchType searchType = SearchType.SEARCH_MIN_EXPENSES_AND_MAX_EXPENSES;
 
     Integer minExpenses;

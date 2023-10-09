@@ -1,4 +1,4 @@
-package com.json.parser.db.antipn.repositories;
+package com.json.parser.db.antipn.repositories.archive;
 
 import com.json.parser.db.antipn.models.Customer;
 import com.json.parser.db.antipn.models.Product;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface CommonRepository<T> extends JpaRepository<T, Long> {
+public interface CommonRepository<T> {//extends JpaRepository<T, Long> {
 
     Optional<Product> findProductByProductName(String productName);
 

@@ -1,12 +1,13 @@
 package com.json.parser.db.antipn.models.searching;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Getter
 @Setter
-@ToString
 public class SearchByLastName implements Search {
 
+    @JsonIgnore
     SearchType searchType = SearchType.SEARCH_CUSTOMER_BY_LASTNAME;
 
     public SearchByLastName(String lastName) {
@@ -19,4 +20,5 @@ public class SearchByLastName implements Search {
     public SearchType getSearchType() {
         return searchType;
     }
+
 }

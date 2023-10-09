@@ -15,7 +15,16 @@ public interface CustomerMapper {
 
     CustomerDto mapToDto(Customer entity);
 
-    CustomerDto mapToDto(CustomerSQL entity);
+    default CustomerDto mapSQLToDto(CustomerSQL entity) {
+        CustomerDto dto = new CustomerDto();
+
+        dto.setFirstName(entity.getFirstName());
+        dto.setLastName(entity.getLastName());
+
+        return dto;
+    }
+
+    ;
 
 
 }

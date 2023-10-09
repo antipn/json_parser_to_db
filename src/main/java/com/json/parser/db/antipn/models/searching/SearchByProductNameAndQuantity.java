@@ -1,6 +1,7 @@
 package com.json.parser.db.antipn.models.searching;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ public class SearchByProductNameAndQuantity implements Search {
         this.minTimes = minTimes;
     }
 
+    @JsonIgnore
     SearchType searchType = SearchType.SEARCH_PRODUCT_BY_NAME_AND_MIN_QUANTITY;
 
     String productName;

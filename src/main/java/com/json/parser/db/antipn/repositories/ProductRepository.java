@@ -1,4 +1,4 @@
-package com.json.parser.db.antipn.repositories.archive;
+package com.json.parser.db.antipn.repositories;
 
 import com.json.parser.db.antipn.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
