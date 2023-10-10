@@ -3,7 +3,7 @@ package com.json.parser.db.antipn.worker;
 import com.json.parser.db.antipn.dto.CustomerDto;
 import com.json.parser.db.antipn.models.OutputSearchJsonObject;
 import com.json.parser.db.antipn.models.searching.*;
-import com.json.parser.db.antipn.services.CommonService;
+import com.json.parser.db.antipn.services.SearchService;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,10 +12,10 @@ import java.util.List;
 @Component
 public class SearchWorker<T> {
 
-    private final CommonService commonService;
+    private final SearchService searchService;
 
-    public SearchWorker(CommonService commonService) {
-        this.commonService = commonService;
+    public SearchWorker(SearchService searchService) {
+        this.searchService = searchService;
     }
 
 
@@ -38,7 +38,7 @@ public class SearchWorker<T> {
                 case SEARCH_CUSTOMER_BY_LASTNAME:
                     SearchByLastName searchOne = (SearchByLastName) searchCriteria;
 
-                    List<CustomerDto> customerDtos = commonService.searchCustomerByLastName(searchOne.getLastName());
+                    List<CustomerDto> customerDtos = searchService.searchCustomerByLastName(searchOne.getLastName());
 
                     outputJsonObjects.add(createJsonObject(searchOne, customerDtos));
 
@@ -49,7 +49,7 @@ public class SearchWorker<T> {
 
                     SearchByProductNameAndQuantity searchTwo = (SearchByProductNameAndQuantity) searchCriteria;
 
-                    List<CustomerDto> customerDtos1 = commonService.searchProductNameAndMinTimes(searchTwo.getProductName(), searchTwo.getMinTimes().longValue());
+                    List<CustomerDto> customerDtos1 = searchService.searchProductNameAndMinTimes(searchTwo.getProductName(), searchTwo.getMinTimes().longValue());
 
                     outputJsonObjects.add(createJsonObject(searchTwo, customerDtos1));
 
@@ -59,7 +59,7 @@ public class SearchWorker<T> {
 
                     SearchByMinAndMaxProductPrice searchThree = (SearchByMinAndMaxProductPrice) searchCriteria;
 
-                    List<CustomerDto> customerDtos2 = commonService.searchCustomersWithPurchasesBeetwenMinMax(searchThree.getMinExpenses().longValue(), searchThree.getMaxExpenses().longValue());
+                    List<CustomerDto> customerDtos2 = searchService.searchCustomersWithPurchasesBeetwenMinMax(searchThree.getMinExpenses().longValue(), searchThree.getMaxExpenses().longValue());
 
                     outputJsonObjects.add(createJsonObject(searchThree, customerDtos2));
 
@@ -68,7 +68,7 @@ public class SearchWorker<T> {
                 case SEARCH_BAD_CUSTOMER:
                     SearchBadCustomers searchFour = (SearchBadCustomers) searchCriteria;
 
-                    List<CustomerDto> customerDtos3 = commonService.searchBadCustomers(searchFour.getBadCustomers().longValue());
+                    List<CustomerDto> customerDtos3 = searchService.searchBadCustomers(searchFour.getBadCustomers().longValue());
 
                     outputJsonObjects.add(createJsonObject(searchFour, customerDtos3));
 

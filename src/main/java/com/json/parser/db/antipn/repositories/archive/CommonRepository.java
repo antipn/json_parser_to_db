@@ -2,8 +2,7 @@ package com.json.parser.db.antipn.repositories.archive;
 
 import com.json.parser.db.antipn.models.Customer;
 import com.json.parser.db.antipn.models.Product;
-import com.json.parser.db.antipn.sqlObjects.CustomerSQL;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.json.parser.db.antipn.models.sqlObjects.CustomerSQL;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;

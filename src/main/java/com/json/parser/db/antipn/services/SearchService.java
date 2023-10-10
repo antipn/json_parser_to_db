@@ -7,26 +7,23 @@ import com.json.parser.db.antipn.models.Product;
 import com.json.parser.db.antipn.repositories.CustomerRepository;
 import com.json.parser.db.antipn.repositories.ProductRepository;
 import com.json.parser.db.antipn.repositories.PurchaseRepository;
-import com.json.parser.db.antipn.sqlObjects.CustomerSQL;
+import com.json.parser.db.antipn.models.sqlObjects.CustomerSQL;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
-public class CommonService {
+public class SearchService {
 
     private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
-
     private final PurchaseRepository purchaseRepository;
 
 
-    public CommonService(CustomerRepository customerRepository, ProductRepository productRepository, PurchaseRepository purchaseRepository) {
+    public SearchService(CustomerRepository customerRepository, ProductRepository productRepository, PurchaseRepository purchaseRepository) {
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
         this.purchaseRepository = purchaseRepository;

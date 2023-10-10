@@ -7,6 +7,8 @@ DROP SEQUENCE IF EXISTS global_seq_customers;
 DROP TABLE IF EXISTS products;
 DROP SEQUENCE IF EXISTS global_seq_products;
 
+DROP TABLE IF EXISTS w_days;
+
 -- ______________________________________________________--
 
 CREATE SEQUENCE global_seq_customers START WITH 1 INCREMENT BY 1;
@@ -37,3 +39,5 @@ CREATE TABLE purchases
     FOREIGN KEY (id_customer) REFERENCES customers (id) ON DELETE CASCADE,
     FOREIGN KEY (id_product) REFERENCES products (id) ON DELETE CASCADE
 );
+
+CREATE TABLE w_days(working_days date);

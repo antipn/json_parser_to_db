@@ -1,7 +1,7 @@
 package com.json.parser.db.antipn.repositories;
 
 import com.json.parser.db.antipn.models.Purchase;
-import com.json.parser.db.antipn.sqlObjects.CustomerSQL;
+import com.json.parser.db.antipn.models.sqlObjects.CustomerSQL;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
