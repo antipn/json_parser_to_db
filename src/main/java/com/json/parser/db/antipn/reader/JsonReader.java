@@ -2,6 +2,7 @@ package com.json.parser.db.antipn.reader;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.json.parser.db.antipn.dto.StatisticsDto;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -10,7 +11,7 @@ import java.util.*;
 
 public class JsonReader {
 
-    static public List<HashMap<String, String>> getData(String fileName) throws Exception {
+    public static List<HashMap<String, String>> getSearchingData(String fileName) throws Exception {
 
         InputStream inputData = null;
 
@@ -47,12 +48,32 @@ public class JsonReader {
 
             while (nodeFields.hasNext()) {
                 Map.Entry<String, JsonNode> next = nodeFields.next();
-                nodeData.put(next.getKey(),next.getValue().asText());
+                nodeData.put(next.getKey(), next.getValue().asText());
             }
             data.add(nodeData);
         }
         inputData.close();
 
         return data;
+    }
+
+    public static StatisticsDto getStatisticsData(String fileName) throws Exception {
+
+        StatisticsDto statisticsDto;
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            URL file = JsonReader.class.getResource("/" + fileName);
+            if (file == null) throw new Exception("Файл не существует");
+
+            statisticsDto = mapper.readValue(file, StatisticsDto.class);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("There is problem with file " + fileName);
+            throw new Exception("Ошибка");
+        }
+
+        return statisticsDto;
     }
 }
