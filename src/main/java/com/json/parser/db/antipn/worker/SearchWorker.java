@@ -1,7 +1,7 @@
 package com.json.parser.db.antipn.worker;
 
 import com.json.parser.db.antipn.dto.CustomerDto;
-import com.json.parser.db.antipn.models.OutputSearchJsonObject;
+import com.json.parser.db.antipn.models.searching.OutputSearchJsonObject;
 import com.json.parser.db.antipn.models.searching.*;
 import com.json.parser.db.antipn.services.SearchService;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class SearchWorker<T> {
+public class SearchWorker {
 
     private final SearchService searchService;
 
@@ -27,7 +27,7 @@ public class SearchWorker<T> {
         return outputSearchJsonObject;
     }
 
-    public List<OutputSearchJsonObject> preparingOutputData(List<? extends Search> inputCriterias) {
+    public List<OutputSearchJsonObject> preparingOutputData(List<Search> inputCriterias) {
 
         List<OutputSearchJsonObject> outputJsonObjects = new ArrayList<>();
 

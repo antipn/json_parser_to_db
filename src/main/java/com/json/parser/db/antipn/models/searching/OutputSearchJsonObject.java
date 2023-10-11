@@ -1,4 +1,4 @@
-package com.json.parser.db.antipn.models;
+package com.json.parser.db.antipn.models.searching;
 
 
 import com.json.parser.db.antipn.dto.CustomerDto;

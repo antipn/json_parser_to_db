@@ -1,4 +1,4 @@
-package com.json.parser.db.antipn.models;
+package com.json.parser.db.antipn.models.entity;
 
 
 import jakarta.persistence.*;

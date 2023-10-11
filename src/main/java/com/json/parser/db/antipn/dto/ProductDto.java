@@ -11,6 +11,6 @@ import lombok.*;
 public class ProductDto {
 
     String productName;
-    Integer productPrice;
+    Long expenses;
 
 }

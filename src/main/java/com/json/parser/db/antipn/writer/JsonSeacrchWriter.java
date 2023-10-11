@@ -2,7 +2,7 @@ package com.json.parser.db.antipn.writer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.json.parser.db.antipn.models.OutputSearchJsonObject;
+import com.json.parser.db.antipn.models.searching.OutputSearchJsonObject;
 import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
@@ -12,11 +12,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Component
-public class JsonWriter {
+public class JsonSeacrchWriter {
 
     public String generateResultJson(List<OutputSearchJsonObject> inputData) throws IOException {
 
-
+        //спросить как поднять его один раз
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode json = mapper.createObjectNode();
 

@@ -1,14 +1,14 @@
 package com.json.parser.db.antipn.repositories;
 
-import com.json.parser.db.antipn.models.Customer;
+import com.json.parser.db.antipn.models.entity.Customer;
 import com.json.parser.db.antipn.models.sqlObjects.CustomerSQL;
 import com.json.parser.db.antipn.models.sqlObjects.ProductSQL;
+import com.json.parser.db.antipn.models.sqlObjects.WorkingDaysSQL;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,15 +27,16 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     public Optional<List<CustomerSQL>> findBadCustomers(Long num);
 
 
-    @Query(value = "Select count(*) as work_days from (SELECT EXTRACT(dow FROM generate_series('2023-10-01'::date, '2023-10-09'::date, '1 day')) as dow) as Tdow\n" +
-            "where dow between 1 and 5 ;",nativeQuery = true)
-    public Integer getTotalWorkingDays();
+    @Query(value = "Select count(*) as workingDays from w_days;"
+            , nativeQuery = true)
+    public Optional<WorkingDaysSQL> getTotalWorkingDays();
 
+    //(SELECT EXTRACT(dow FROM generate_series('2023-10-01'\\:\\:date, '2023-10-09'\\:\\:date, '1 day')) as dow) as Tdow\n"
     @Transactional
     @Modifying
     @Query(value =
             "Delete From w_days;", nativeQuery = true)
-    public void deleteFromWDays();
+    public void deleteAllRecordsFromWDaysTable();
 
     @Transactional
     @Modifying
@@ -45,14 +46,18 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
                     "from (select (generate_series(:startDate\\:\\:date, :endDate\\:\\:date, '1 day')) as date) as d\n" +
                     "where extract(dow from d.date) between 1 and 5;"
             , nativeQuery = true)
-    public void fillingWDays(String startDate, String endDate);
+    public void fillingWDaysTable(String startDate, String endDate);
+
+    @Query(value = "select A.id as Id, A.first_name as firstName, A.last_name as lastName from customers as A join purchases as B on A.id = B.id_customer\n" +
+            "    inner join w_days C on C.working_days = B.date_purchase group by A.id order by a.id ASC;\n", nativeQuery = true)
+    public Optional<List<CustomerSQL>> getCustomerForStatistics();
 
 
-    @Query(value = "select B.product_name as productname,B.product_price, count(B.id)*B.product_price as expenses\n" +
+    @Query(value = "select B.product_name as productName, count(B.id)*B.product_price as expenses\n" +
             "from purchases as A\n" +
             "         join products as B on A.id_product = B.id\n" +
             "         join customers as C on A.id_customer = C.id inner join w_days as D on A.date_purchase = D.working_days\n" +
-            "where c.id=:user_id\n" +
-            "group by B.id,c.id;", nativeQuery = true)
-    public Optional<List<ProductSQL>> getStatisticByUserID(Long user_id);
+            "where C.id=:customerId\n" +
+            "group by B.id,C.id;", nativeQuery = true)
+    public Optional<List<ProductSQL>> getStatisticByCystomerId(Long customerId);
 }

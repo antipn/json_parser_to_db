@@ -6,8 +6,8 @@ import java.util.*;
 
 public class JsonToObjects {
 
-    public static List<? super Search> converter(List<HashMap<String, String>> inputData) throws Exception {
-        List<? super Search> outputData = new ArrayList<>();
+    public static List<Search> converter(List<HashMap<String, String>> inputData) throws Exception {
+        List<Search> outputData = new ArrayList<>();
 
         for (HashMap<String, String> node : inputData) {
 

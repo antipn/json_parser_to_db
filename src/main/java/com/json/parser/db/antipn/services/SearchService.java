@@ -2,8 +2,8 @@ package com.json.parser.db.antipn.services;
 
 import com.json.parser.db.antipn.dto.CustomerDto;
 import com.json.parser.db.antipn.mapper.CustomerMapper;
-import com.json.parser.db.antipn.models.Customer;
-import com.json.parser.db.antipn.models.Product;
+import com.json.parser.db.antipn.models.entity.Customer;
+import com.json.parser.db.antipn.models.entity.Product;
 import com.json.parser.db.antipn.repositories.CustomerRepository;
 import com.json.parser.db.antipn.repositories.ProductRepository;
 import com.json.parser.db.antipn.repositories.PurchaseRepository;
