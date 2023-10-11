@@ -17,6 +17,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,11 @@ import java.util.Optional;
 public class JsonParserDBApplication {
 
     public static void main(String[] args) throws Exception {
+
+        System.out.println("Аргументы приложения");
+        for(String arg:args) {
+            System.out.println(arg);
+        }
 
         ConfigurableApplicationContext context = SpringApplication.run(JsonParserDBApplication.class, args);
 

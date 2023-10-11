@@ -26,12 +26,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             , nativeQuery = true)
     public Optional<List<CustomerSQL>> findBadCustomers(Long num);
 
-
-    @Query(value = "Select count(*) as workingDays from w_days;"
+    @Query(value = "SELECT count(*) as workingDays from w_days;"
             , nativeQuery = true)
     public Optional<WorkingDaysSQL> getTotalWorkingDays();
 
-    //(SELECT EXTRACT(dow FROM generate_series('2023-10-01'\\:\\:date, '2023-10-09'\\:\\:date, '1 day')) as dow) as Tdow\n"
     @Transactional
     @Modifying
     @Query(value =

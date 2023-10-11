@@ -7,12 +7,10 @@ import com.json.parser.db.antipn.models.sqlObjects.ProductSQL;
 import com.json.parser.db.antipn.models.statistics.OutputStatisticsJsonObject;
 import com.json.parser.db.antipn.models.statistics.CustomerStatistic;
 import com.json.parser.db.antipn.services.StatisticsService;
-import org.mapstruct.ap.shaded.freemarker.core.ArithmeticEngine;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class StatisticsWorker {
@@ -62,7 +60,6 @@ public class StatisticsWorker {
         //устанавливаем кол-во рабочих дней в периоде
         outputStatisticsJsonObject.setTotalDays(statisticsService.getTotalWorkingDays().getWorkingDays());
         outputStatisticsJsonObject.setCustomers(customerStatistics);
-
 
         Long totalExpenses = customerStatistics.stream().mapToLong(CustomerStatistic::getTotalExpenses)
                 .sum();

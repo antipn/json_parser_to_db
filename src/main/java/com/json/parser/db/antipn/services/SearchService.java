@@ -22,7 +22,6 @@ public class SearchService {
     private final ProductRepository productRepository;
     private final PurchaseRepository purchaseRepository;
 
-
     public SearchService(CustomerRepository customerRepository, ProductRepository productRepository, PurchaseRepository purchaseRepository) {
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;
@@ -51,7 +50,6 @@ public class SearchService {
                 result = request.get();
             }
         }
-
 
         return result.stream()
                 .map(CustomerMapper.CUSTOMER_MAPPER::mapSQLToDto)
