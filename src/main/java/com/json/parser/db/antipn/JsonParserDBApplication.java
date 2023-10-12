@@ -33,12 +33,11 @@ public class JsonParserDBApplication {
         //2 аргумент имя выходного файла output.json
 
         if (args.length < 3) {
-            throw new Exception("Количество аргументов меньше 3, должны быть 3");
+            throw new Exception("Количество аргументов меньше 3, должны быть 3, получили " + args.length);
         }
 
         switch (args[0]) {
-
-            case "search":
+            case "search" -> {
                 System.out.println("Критерий - search");
                 List<HashMap<String, String>> data = JsonReader.getSearchingData(args[1]);
                 List<Search> converter = JsonToObjects.converter(data);
@@ -46,20 +45,17 @@ public class JsonParserDBApplication {
                 String outputJsonSearch = context.getBean(JsonSearchWriter.class).generateResultJson(list, args[2]);
                 System.out.println("Выводим наш search JSON");
                 System.out.println(outputJsonSearch);
-                break;
-
-            case "stat":
+            }
+            case "stat" -> {
                 System.out.println("Критерий - stat");
                 StatisticsDto statisticsData = JsonReader.getStatisticsData(args[1]);
                 StatisticsWorker stat = context.getBean(StatisticsWorker.class);
                 OutputStatisticsJsonObject outputStatisticsJsonObject = stat.preparingOutputData(statisticsData.getStartDate(), statisticsData.getEndDate());
                 String outputJsonStat = context.getBean(JsonStatisticsWriter.class).generateResultJson(outputStatisticsJsonObject, args[2]);
                 System.out.println(outputJsonStat);
-                break;
-
-            default:
-                throw new Exception("Неправильное имя критерия, должны быть 'search' или 'stat', получили " + args[0]);
-
+            }
+            default ->
+                    throw new Exception("Неправильное имя критерия, должны быть 'search' или 'stat', получили " + args[0]);
         }
     }
 }

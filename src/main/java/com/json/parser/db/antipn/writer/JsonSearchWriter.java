@@ -28,7 +28,7 @@ public class JsonSearchWriter {
 
         try (FileOutputStream fos = new FileOutputStream(fileName);
              OutputStreamWriter outputFile = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
-            outputFile.write(String.valueOf(string));
+            outputFile.write(string);
         } catch (IOException e) {
             System.out.println(e.getMessage());
             System.out.println("There is problem with file " + fileName);
