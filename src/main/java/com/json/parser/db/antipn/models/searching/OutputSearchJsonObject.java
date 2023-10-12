@@ -2,7 +2,6 @@ package com.json.parser.db.antipn.models.searching;
 
 
 import com.json.parser.db.antipn.dto.CustomerDto;
-import com.json.parser.db.antipn.models.searching.Search;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

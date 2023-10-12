@@ -2,7 +2,6 @@ package com.json.parser.db.antipn.models.statistics;
 
 
 import com.json.parser.db.antipn.dto.ProductDto;
-import com.json.parser.db.antipn.models.sqlObjects.ProductSQL;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

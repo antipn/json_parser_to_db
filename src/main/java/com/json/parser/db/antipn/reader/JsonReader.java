@@ -4,12 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.json.parser.db.antipn.dto.StatisticsDto;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.*;
 
 
@@ -24,8 +19,7 @@ public class JsonReader {
         try {
             File file = new File(fileName);
             if (!file.exists()) throw new Exception("Файл не существует");
-            inputData = JsonReader.class.getClassLoader().getResourceAsStream(fileName);
-
+            inputData = new BufferedInputStream(new FileInputStream(file));
             inputData.mark(1);
             int read = inputData.read(new byte[1]);
             inputData.reset();
