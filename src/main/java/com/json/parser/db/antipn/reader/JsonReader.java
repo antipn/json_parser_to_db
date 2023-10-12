@@ -4,8 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.json.parser.db.antipn.dto.StatisticsDto;
 
+import java.io.File;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -18,8 +22,8 @@ public class JsonReader {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            URL file = JsonReader.class.getResource("/" + fileName);
-            if (file == null) throw new Exception("Файл не существует");
+            File file = new File(fileName);
+            if (!file.exists()) throw new Exception("Файл не существует");
             inputData = JsonReader.class.getClassLoader().getResourceAsStream(fileName);
 
             inputData.mark(1);
@@ -63,8 +67,9 @@ public class JsonReader {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            URL file = JsonReader.class.getResource("/" + fileName);
-            if (file == null) throw new Exception("Файл не существует");
+
+            File file = new File(fileName);//JsonReader.class.getResource("/" + fileName);
+            if (!file.exists()) throw new Exception("Файл не существует");
 
             statisticsDto = mapper.readValue(file, StatisticsDto.class);
 
