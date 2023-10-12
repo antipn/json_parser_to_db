@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class JsonStatisticsWriter {
 
-    public String generateResultJson(OutputStatisticsJsonObject inputData) throws IOException {
+    public String generateResultJson(OutputStatisticsJsonObject inputData, String fileName) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -21,6 +21,9 @@ public class JsonStatisticsWriter {
         try (FileOutputStream fos = new FileOutputStream("c:/root/outputStat.json");
              OutputStreamWriter outputFile = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
             outputFile.write(String.valueOf(json));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            System.out.println("There is problem with file " + fileName);
         }
 
         return json;

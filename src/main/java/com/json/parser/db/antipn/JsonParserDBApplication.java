@@ -10,7 +10,7 @@ import com.json.parser.db.antipn.reader.JsonReader;
 
 import com.json.parser.db.antipn.worker.SearchWorker;
 import com.json.parser.db.antipn.worker.StatisticsWorker;
-import com.json.parser.db.antipn.writer.JsonSeacrchWriter;
+import com.json.parser.db.antipn.writer.JsonSearchWriter;
 import com.json.parser.db.antipn.writer.JsonStatisticsWriter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,42 +24,42 @@ import java.util.List;
 public class JsonParserDBApplication {
 
     public static void main(String[] args) throws Exception {
-
-        System.out.println("Аргументы приложения");
-        for (String arg : args) {
-            System.out.println(arg);
-        }
-
         ConfigurableApplicationContext context = SpringApplication.run(JsonParserDBApplication.class, args);
 
-        List<HashMap<String, String>> data = JsonReader.getSearchingData("input.json");
+        //Пример запуска  java -jar program.jar search input.json output.json
 
-        List<Search> converter = JsonToObjects.converter(data);
+        //0 аргумент - search or stat
+        //1 аргумент имя входного файла input.json
+        //2 аргумент имя выходного файла output.json
 
-        List<OutputSearchJsonObject> list = context.getBean(SearchWorker.class).preparingOutputData(converter);
+        if (args.length < 3) {
+            throw new Exception("Количество аргументов меньше 3, должны быть 3");
+        }
 
-        String outputJsonSearch = context.getBean(JsonSeacrchWriter.class).generateResultJson(list);
+        switch (args[0]) {
 
-        System.out.println("Выводим наш search JSON");
-        System.out.println(outputJsonSearch);
+            case "search":
+                System.out.println("Критерий - search");
+                List<HashMap<String, String>> data = JsonReader.getSearchingData(args[1]);
+                List<Search> converter = JsonToObjects.converter(data);
+                List<OutputSearchJsonObject> list = context.getBean(SearchWorker.class).preparingOutputData(converter);
+                String outputJsonSearch = context.getBean(JsonSearchWriter.class).generateResultJson(list, args[2]);
+                System.out.println("Выводим наш search JSON");
+                System.out.println(outputJsonSearch);
+                break;
 
+            case "stat":
+                System.out.println("Критерий - stat");
+                StatisticsDto statisticsData = JsonReader.getStatisticsData(args[1]);
+                StatisticsWorker stat = context.getBean(StatisticsWorker.class);
+                OutputStatisticsJsonObject outputStatisticsJsonObject = stat.preparingOutputData(statisticsData.getStartDate(), statisticsData.getEndDate());
+                String outputJsonStat = context.getBean(JsonStatisticsWriter.class).generateResultJson(outputStatisticsJsonObject, args[2]);
+                System.out.println(outputJsonStat);
+                break;
 
-//        CustomerRepository customerRepo = context.getBean(CustomerRepository.class);
-//        customerRepo.deleteAllRecordsFromWDaysTable();
-//        //customerRepo.fillingWDays(LocalDate.of(2023, 10, 01), LocalDate.of(2023, 10, 9));
-//        customerRepo.fillingWDaysTable("2023-10-01","2023-10-09");
-//        Optional<List<ProductSQL>> statisticByUserID = customerRepo.getStatisticByCystomerId(1L);
-//        statisticByUserID.get().forEach(item -> System.out.println(item.getProductName() + " " + item.getExpenses()));
+            default:
+                throw new Exception("Неправильное имя критерия, должны быть 'search' или 'stat', получили " + args[0]);
 
-
-        System.out.println("Statistics");
-
-        StatisticsDto statisticsData = JsonReader.getStatisticsData(args[1]);
-
-        StatisticsWorker stat = context.getBean(StatisticsWorker.class);
-        OutputStatisticsJsonObject outputStatisticsJsonObject = stat.preparingOutputData(statisticsData.getStartDate(), statisticsData.getEndDate());
-        String outputJsonStat = context.getBean(JsonStatisticsWriter.class).generateResultJson(outputStatisticsJsonObject);
-        System.out.println(outputJsonStat);
-
+        }
     }
 }

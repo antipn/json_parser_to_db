@@ -12,9 +12,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Component
-public class JsonSeacrchWriter {
+public class JsonSearchWriter {
 
-    public String generateResultJson(List<OutputSearchJsonObject> inputData) throws IOException {
+    public String generateResultJson(List<OutputSearchJsonObject> inputData, String fileName) throws IOException {
 
         //спросить как поднять его один раз
         ObjectMapper mapper = new ObjectMapper();
@@ -26,9 +26,12 @@ public class JsonSeacrchWriter {
 
         String string = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
 
-        try (FileOutputStream fos = new FileOutputStream("c:/root/output.json");
+        try (FileOutputStream fos = new FileOutputStream(fileName);
              OutputStreamWriter outputFile = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
             outputFile.write(String.valueOf(string));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            System.out.println("There is problem with file " + fileName);
         }
 
         return string;
