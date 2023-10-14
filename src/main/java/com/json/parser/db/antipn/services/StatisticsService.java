@@ -4,7 +4,6 @@ import com.json.parser.db.antipn.models.sqlObjects.CustomerSQL;
 import com.json.parser.db.antipn.models.sqlObjects.ProductSQL;
 import com.json.parser.db.antipn.models.sqlObjects.WorkingDaysSQL;
 import com.json.parser.db.antipn.repositories.CustomerRepository;
-import com.json.parser.db.antipn.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +13,11 @@ import java.util.Optional;
 public class StatisticsService {
 
     private final CustomerRepository customerRepository;
-    private final ProductRepository productRepository;
 
-    public StatisticsService(CustomerRepository customerRepository, ProductRepository productRepository) {
+
+    public StatisticsService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
-        this.productRepository = productRepository;
+
     }
 
     public void updateW_daysTable(String startDate, String endDate) {

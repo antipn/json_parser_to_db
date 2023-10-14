@@ -2,7 +2,9 @@ package com.json.parser.db.antipn.reader;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.json.parser.db.antipn.dto.StatisticsDto;
+import com.json.parser.db.antipn.exception.JsonException;
 
 import java.io.*;
 import java.util.*;
@@ -18,41 +20,43 @@ public class JsonReader {
 
         try {
             File file = new File(fileName);
-            if (!file.exists()) throw new Exception("Файл не существует");
+            if (!file.exists()) throw new JsonException("Файл не существует");
             inputData = new BufferedInputStream(new FileInputStream(file));
             inputData.mark(1);
             int read = inputData.read(new byte[1]);
             inputData.reset();
             if (read == -1) {
-                throw new Exception("Нет данных в файле");
+                throw new JsonException("Нет данных в файле");
             }
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("There is problem with file " + fileName);
-            throw new Exception("Ошибка");
-        }
+            JsonNode rootNode = mapper.readTree(inputData);
 
-        JsonNode rootNode = mapper.readTree(inputData);
+            JsonNode locatedNode = rootNode.path("criterias");
 
-        JsonNode locatedNode = rootNode.path("criterias");
-
-        List<HashMap<String, String>> data = new ArrayList<>();
-
-        for (JsonNode node : locatedNode) {
-            HashMap<String, String> nodeData = new HashMap<>();
-
-            Iterator<Map.Entry<String, JsonNode>> nodeFields = node.fields();
-
-            while (nodeFields.hasNext()) {
-                Map.Entry<String, JsonNode> next = nodeFields.next();
-                nodeData.put(next.getKey(), next.getValue().asText());
+            if (locatedNode.size() == 0) {
+                throw new JsonException("Не удалось вычитать дерево критериев.");
             }
-            data.add(nodeData);
-        }
-        inputData.close();
 
-        return data;
+            List<HashMap<String, String>> data = new ArrayList<>();
+
+            for (JsonNode node : locatedNode) {
+                HashMap<String, String> nodeData = new HashMap<>();
+
+                Iterator<Map.Entry<String, JsonNode>> nodeFields = node.fields();
+
+                while (nodeFields.hasNext()) {
+                    Map.Entry<String, JsonNode> next = nodeFields.next();
+                    nodeData.put(next.getKey(), next.getValue().asText());
+                }
+                data.add(nodeData);
+            }
+            inputData.close();
+
+            return data;
+
+        } catch (JsonException e) {
+            throw new JsonException(e.getMessage() + " Проблема с файлом " + fileName);
+        }
     }
 
     public static StatisticsDto getStatisticsData(String fileName) throws Exception {
@@ -62,15 +66,15 @@ public class JsonReader {
 
         try {
 
-            File file = new File(fileName);//JsonReader.class.getResource("/" + fileName);
-            if (!file.exists()) throw new Exception("Файл не существует");
+            File file = new File(fileName);
+            if (!file.exists()) throw new JsonException("Файл не существует");
 
             statisticsDto = mapper.readValue(file, StatisticsDto.class);
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("There is problem with file " + fileName);
-            throw new Exception("Ошибка");
+        } catch (UnrecognizedPropertyException e) {
+            throw new JsonException("Невозможно прочитать данные из файла для stat, должны быть два поля startDate и endDate с датами");
+        } catch (JsonException e) {
+            throw new JsonException(e.getMessage() + " Проблема с файлом " + fileName);
         }
 
         return statisticsDto;

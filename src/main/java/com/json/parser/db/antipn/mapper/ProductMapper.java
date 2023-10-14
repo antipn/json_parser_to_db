@@ -1,9 +1,6 @@
 package com.json.parser.db.antipn.mapper;
 
-import com.json.parser.db.antipn.dto.CustomerDto;
 import com.json.parser.db.antipn.dto.ProductDto;
-import com.json.parser.db.antipn.models.entity.Product;
-import com.json.parser.db.antipn.models.sqlObjects.CustomerSQL;
 import com.json.parser.db.antipn.models.sqlObjects.ProductSQL;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

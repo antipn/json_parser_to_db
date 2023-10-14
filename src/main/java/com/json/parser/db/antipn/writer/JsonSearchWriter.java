@@ -26,13 +26,15 @@ public class JsonSearchWriter {
 
         String string = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
 
-        try (FileOutputStream fos = new FileOutputStream(fileName);
-             OutputStreamWriter outputFile = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
-            outputFile.write(string);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            System.out.println("There is problem with file " + fileName);
-        }
+        CommonWriter.writeDataToFile(string,fileName);
+
+//        try (FileOutputStream fos = new FileOutputStream(fileName);
+//             OutputStreamWriter outputFile = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+//            outputFile.write(string);
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//            System.out.println("There is problem with file " + fileName);
+//        }
 
         return string;
     }

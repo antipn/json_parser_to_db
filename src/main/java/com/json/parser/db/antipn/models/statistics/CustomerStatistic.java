@@ -1,6 +1,5 @@
 package com.json.parser.db.antipn.models.statistics;
 
-
 import com.json.parser.db.antipn.dto.ProductDto;
 import lombok.Data;
 import lombok.Getter;

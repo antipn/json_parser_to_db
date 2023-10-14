@@ -1,5 +1,6 @@
 package com.json.parser.db.antipn.converter;
 
+import com.json.parser.db.antipn.exception.JsonException;
 import com.json.parser.db.antipn.models.searching.*;
 
 import java.util.*;
@@ -14,41 +15,65 @@ public class JsonToObjects {
             if (node.containsKey("lastName")) {
                 SearchByLastName searchByLastName = new SearchByLastName(node.get("lastName"));
                 outputData.add(searchByLastName);
-            }
-
-            if (node.containsKey("productName") && node.containsKey("minTimes")) {
+            } else if (node.containsKey("productName") && node.containsKey("minTimes")) {
                 SearchByProductNameAndQuantity searchByProductNameAndQuantity = new SearchByProductNameAndQuantity();
-                for (String key : node.keySet()) {
-                    switch (key) {
-                        case "productName":
-                            searchByProductNameAndQuantity.setProductName(node.get(key));
-                            break;
-                        case "minTimes":
-                            searchByProductNameAndQuantity.setMinTimes(Integer.parseInt(node.get(key)));
-                            break;
-                    }
-                }
-                outputData.add(searchByProductNameAndQuantity);
-            }
 
-            if (node.containsKey("minExpenses") && node.containsKey("maxExpenses")) {
+                try {
+                    int minTimes = Integer.parseInt(node.get("minTimes"));
+                    searchByProductNameAndQuantity.setProductName(node.get("productName"));
+                    searchByProductNameAndQuantity.setMinTimes(minTimes);
+
+//                    for (String key : node.keySet()) {
+//                        switch (key) {
+//                            case "productName":
+//
+//                                break;
+//                            case "minTimes":
+//                                searchByProductNameAndQuantity.setMinTimes(minTimes);
+//                                break;
+//                        }
+//                    }
+                    outputData.add(searchByProductNameAndQuantity);
+                } catch (NumberFormatException e) {
+                    throw new JsonException("поле minTimes не содержит число");
+                }
+
+
+            } else if (node.containsKey("minExpenses") && node.containsKey("maxExpenses")) {
                 SearchByMinAndMaxProductPrice searchByMinAndMaxProductPrice = new SearchByMinAndMaxProductPrice();
-                for (String key : node.keySet()) {
-                    switch (key) {
-                        case "minExpenses":
-                            searchByMinAndMaxProductPrice.setMinExpenses(Integer.parseInt(node.get(key)));
-                            break;
-                        case "maxExpenses":
-                            searchByMinAndMaxProductPrice.setMaxExpenses(Integer.parseInt(node.get(key)));
-                            break;
-                    }
-                }
-                outputData.add(searchByMinAndMaxProductPrice);
-            }
 
-            if (node.containsKey("badCustomers")) {
-                SearchBadCustomers searchBadCustomers = new SearchBadCustomers(Integer.parseInt(node.get("badCustomers")));
-                outputData.add(searchBadCustomers);
+                try {
+                    int minExpenses = Integer.parseInt(node.get("minExpenses"));
+                    int maxExpenses = Integer.parseInt(node.get("maxExpenses"));
+                    searchByMinAndMaxProductPrice.setMinExpenses(minExpenses);
+                    searchByMinAndMaxProductPrice.setMaxExpenses(maxExpenses);
+
+//                    for (String key : node.keySet()) {
+//                        switch (key) {
+//                            case "minExpenses":
+//                    searchByMinAndMaxProductPrice.setMinExpenses(Integer.parseInt(node.get("minExpenses")));
+//                                break;
+//                            case "maxExpenses":
+//                    searchByMinAndMaxProductPrice.setMaxExpenses(Integer.parseInt(node.get("maxExpenses")));
+//                              break;
+//                        }
+//                    }
+                    outputData.add(searchByMinAndMaxProductPrice);
+                } catch (NumberFormatException e) {
+                    throw new JsonException("поле minExpenses или maxExpenses не содержит число");
+                }
+            } else if (node.containsKey("badCustomers")) {
+
+                try {
+                    Integer badCustomers = Integer.parseInt(node.get("badCustomers"));
+                    SearchBadCustomers searchBadCustomers = new SearchBadCustomers(badCustomers);
+                    outputData.add(searchBadCustomers);
+                } catch (NumberFormatException e) {
+                    throw new JsonException("поле badCustomers не содержит число");
+                }
+
+            } else {
+                throw new JsonException("Проблема с наименованием полей для критерия, возможно опечатка, проверьте названия полей ввода");
             }
 
         }

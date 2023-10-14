@@ -18,13 +18,15 @@ public class JsonStatisticsWriter {
 
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(inputData);
 
-        try (FileOutputStream fos = new FileOutputStream(fileName);
-             OutputStreamWriter outputFile = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
-            outputFile.write(json);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            System.out.println("There is problem with file " + fileName);
-        }
+        CommonWriter.writeDataToFile(json,fileName);
+
+//        try (FileOutputStream fos = new FileOutputStream(fileName);
+//             OutputStreamWriter outputFile = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+//            outputFile.write(json);
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//            System.out.println("There is problem with file " + fileName);
+//        }
 
         return json;
 

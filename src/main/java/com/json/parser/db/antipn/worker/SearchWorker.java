@@ -44,7 +44,6 @@ public class SearchWorker {
 
                     break;
 
-
                 case SEARCH_PRODUCT_BY_NAME_AND_MIN_QUANTITY:
 
                     SearchByProductNameAndQuantity searchTwo = (SearchByProductNameAndQuantity) searchCriteria;
@@ -71,9 +70,7 @@ public class SearchWorker {
                     List<CustomerDto> customerDtos3 = searchService.searchBadCustomers(searchFour.getBadCustomers().longValue());
 
                     outputJsonObjects.add(createJsonObject(searchFour, customerDtos3));
-
             }
-
         }
 
         return outputJsonObjects;

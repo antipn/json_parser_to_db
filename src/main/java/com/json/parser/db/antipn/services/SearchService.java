@@ -30,7 +30,7 @@ public class SearchService {
 
     public List<CustomerDto> searchCustomerByLastName(String lastName) {
 
-        Optional<List<Customer>> request = customerRepository.findAllByLastName(lastName);
+        Optional<List<Customer>> request = customerRepository.findAllByLastNameOrderByFirstName(lastName);
 
         if (request.isPresent()) {
             return request.get().stream().map(CustomerMapper.CUSTOMER_MAPPER::mapToDto).toList();

@@ -15,7 +15,7 @@ import java.util.Optional;
 @Transactional
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    Optional<List<Customer>> findAllByLastName(String lastName);
+    Optional<List<Customer>> findAllByLastNameOrderByFirstName(String lastName);
 
     @Query(value =
             "SELECT id_customer as id, c.first_name as firstName, c.last_name as lastName \n" +

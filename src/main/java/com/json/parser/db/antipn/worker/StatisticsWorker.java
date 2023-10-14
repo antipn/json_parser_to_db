@@ -1,6 +1,7 @@
 package com.json.parser.db.antipn.worker;
 
 import com.json.parser.db.antipn.dto.ProductDto;
+import com.json.parser.db.antipn.exception.JsonException;
 import com.json.parser.db.antipn.mapper.ProductMapper;
 import com.json.parser.db.antipn.models.sqlObjects.CustomerSQL;
 import com.json.parser.db.antipn.models.sqlObjects.ProductSQL;
@@ -31,7 +32,8 @@ public class StatisticsWorker {
 
 
         List<CustomerStatistic> customerStatistics = new ArrayList<>();
-        if (customers != null) {
+        //если покупатели на даты нашлись
+        if (customers.size() != 0) {
             //по каждому покупателю вычленяем его статистику покупок
             for (CustomerSQL customer : customers) {
                 //получаем статистику по продуктам покупателя в SQL
@@ -52,7 +54,7 @@ public class StatisticsWorker {
 
             }
         } else {
-            System.out.println("Выкинуть ошибку ");
+            throw new JsonException("За данный период нат покупок в рабочие дни, возможно стоит изменить даты для запроса");
         }
 
         //формируем общую статистику

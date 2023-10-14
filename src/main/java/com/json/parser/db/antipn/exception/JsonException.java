@@ -1,9 +1,9 @@
 package com.json.parser.db.antipn.exception;
 
-public class ErrorRowCatcher extends RuntimeException {
+public class JsonException extends RuntimeException {
     private String message;
 
-    public ErrorRowCatcher(String error) {
+    public JsonException(String error) {
         super(error);
         this.message = error;
     }
